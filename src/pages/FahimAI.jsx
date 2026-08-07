@@ -3,6 +3,7 @@ import { Reveal } from "@/site/motion";
 import { InnerHero, SectionLabel, CountUp } from "@/site/ui";
 import { ContactSection } from "@/site/ContactSection";
 import { T } from "@/site/theme";
+import { DataGridArt } from "@/site/DecorativeArt";
 
 // ALL copy SOURCED from fahim-ai.html.
 const HOW_FAHIM = [
@@ -141,7 +142,8 @@ export default function FahimAI() {
       </section>
 
       {/* KEY PERFORMANCE AREAS */}
-      <section className="border-t px-6 py-20 md:px-12" style={{ borderColor: T.border, background: T.panel }}>
+      <section className="relative overflow-hidden border-t px-6 py-20 md:px-12" style={{ borderColor: T.border, background: T.panel }}>
+        <DataGridArt className="pointer-events-none absolute right-6 top-6 hidden h-40 w-56 opacity-60 lg:block" />
         <div className="mx-auto max-w-[1400px]">
           <Reveal><SectionLabel>Key Performance Areas</SectionLabel></Reveal>
           <Reveal delay={0.05}><p className="max-w-2xl text-lg" style={{ color: T.muted }}>Fahim AI enhances your customer experience while reducing total cost of ownership through faster time to market.</p></Reveal>

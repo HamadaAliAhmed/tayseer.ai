@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { Reveal } from "./motion";
 import { SectionLabel } from "./ui";
 import { T } from "./theme";
+import { ContactAccentArt } from "./DecorativeArt";
 
 // Shared "How May We Help You!" section, consistent across inner pages.
 // SOURCED: heading "How May We Help You!" + "Submit" + offices/phones/email from footer.
@@ -29,7 +30,8 @@ export const ContactSection = () => {
     }
   };
   return (
-  <section className="relative border-t px-6 py-24 md:px-12" style={{ borderColor: T.border, background: T.bg }}>
+  <section className="relative overflow-hidden border-t px-6 py-24 md:px-12" style={{ borderColor: T.border, background: T.bg }}>
+    <ContactAccentArt className="pointer-events-none absolute -right-10 top-0 hidden h-64 w-64 opacity-70 lg:block" />
     <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-14 lg:grid-cols-12">
       <div className="lg:col-span-5">
         <Reveal><SectionLabel>Talk To Us</SectionLabel></Reveal>

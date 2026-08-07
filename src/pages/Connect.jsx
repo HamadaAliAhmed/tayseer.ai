@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { Reveal } from "@/site/motion";
 import { InnerHero, SectionLabel } from "@/site/ui";
 import { T } from "@/site/theme";
+import { ContactAccentArt } from "@/site/DecorativeArt";
 
 const OFFICES = [
   { region: "Saudi Arabia", addr: "Office 7, 2nd Floor, Selam Building, Prince Saad bin Abdulrahman Alawal Branch Road, Al Rawabi, Riyadh, Kingdom of Saudi Arabia" },
@@ -35,7 +36,8 @@ export default function Connect() {
       {/* SOURCED: H1 "Connect with Tayseer – The Trusted Partner for Your Business" */}
       <InnerHero index="03" crumbs={["Home", "Connect"]} title="Connect" tagline="Connect with Tayseer – The Trusted Partner for Your Business" />
 
-      <section className="px-6 py-24 md:px-12">
+      <section className="relative overflow-hidden px-6 py-24 md:px-12">
+        <ContactAccentArt className="pointer-events-none absolute -right-10 top-0 hidden h-64 w-64 opacity-70 lg:block" />
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-14 lg:grid-cols-12">
           {/* VISIT US */}
           <div className="lg:col-span-5">

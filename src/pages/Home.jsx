@@ -8,6 +8,7 @@ import {
 import { Reveal, LineReveal, Marquee } from "@/site/motion";
 import { toast } from "sonner";
 import { T } from "@/site/theme";
+import { DataGridArt, ContactAccentArt } from "@/site/DecorativeArt";
 
 // ALL copy below is SOURCED from the live tayseer.me mirror unless tagged otherwise.
 
@@ -182,7 +183,8 @@ export default function Home() {
 
       {/* ===== STATS ===== */}
       {/* SOURCED: "Tayseer By Numbers" — values from data-count attributes */}
-      <section className="relative border-t px-6 py-20 md:px-12" style={{ borderColor: T.border, background: T.panel }}>
+      <section className="relative overflow-hidden border-t px-6 py-20 md:px-12" style={{ borderColor: T.border, background: T.panel }}>
+        <DataGridArt className="pointer-events-none absolute right-6 top-6 hidden h-40 w-56 opacity-60 lg:block" />
         <div className="mx-auto max-w-[1400px]">
           <Reveal><SectionLabel>Tayseer By Numbers</SectionLabel></Reveal>
           <div className="mt-10 grid grid-cols-2 gap-px overflow-hidden lg:grid-cols-4" style={{ background: T.border }}>
@@ -284,7 +286,8 @@ export default function Home() {
       {/* ===== CONTACT / LEAD ===== */}
       {/* SOURCED: "Talk To Us" / "How May We Help You!" / button "Submit" */}
       {/* DRAFTED, NOT SOURCED — exact form field labels not extracted; NEEDS VERIFICATION */}
-      <section className="relative border-t px-6 py-24 md:px-12" style={{ borderColor: T.border }}>
+      <section className="relative overflow-hidden border-t px-6 py-24 md:px-12" style={{ borderColor: T.border }}>
+        <ContactAccentArt className="pointer-events-none absolute -right-10 top-0 hidden h-64 w-64 opacity-70 lg:block" />
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-14 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <Reveal><SectionLabel>Talk To Us</SectionLabel></Reveal>

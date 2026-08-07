@@ -3,6 +3,7 @@ import { InnerHero, SectionLabel, CountUp } from "@/site/ui";
 import { ContactSection } from "@/site/ContactSection";
 import { T } from "@/site/theme";
 import { Landmark, ArrowLeftRight, Building2, Radio, CreditCard, CheckCircle2, Layers, Puzzle, Plug, ShieldCheck, Palette } from "lucide-react";
+import { DataGridArt } from "@/site/DecorativeArt";
 
 // ALL copy SOURCED from mbuke.html. Case-study numbers from data-count (real).
 const WHAT = ["Onboarding", "Transfers & payments", "Advanced analytics & insights", "Agent banking support", "USSD/Offline capability"];
@@ -105,7 +106,8 @@ export default function MBuke() {
       </section>
 
       {/* CASE STUDY */}
-      <section className="border-t px-6 py-24 md:px-12" style={{ borderColor: T.border }}>
+      <section className="relative overflow-hidden border-t px-6 py-24 md:px-12" style={{ borderColor: T.border }}>
+        <DataGridArt className="pointer-events-none absolute right-6 top-6 hidden h-40 w-56 opacity-60 lg:block" />
         <div className="mx-auto max-w-[1400px]">
           <Reveal><SectionLabel>Case Study</SectionLabel></Reveal>
           <Reveal delay={0.05}><h2 className="text-4xl font-bold uppercase leading-[0.95] tracking-[-0.02em] sm:text-5xl">MBuke in Action: Yemen Banking Success</h2></Reveal>
