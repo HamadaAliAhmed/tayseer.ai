@@ -1,6 +1,5 @@
 "use client";
 
-import Home from "@/pages/Home";
 import Solutions from "@/pages/Solutions";
 import CoreBanking from "@/pages/CoreBanking";
 import FahimAI from "@/pages/FahimAI";
@@ -17,7 +16,6 @@ import { Privacy, Terms } from "@/pages/Legal";
 import PageStub from "@/site/PageStub";
 
 const staticRoutes = {
-  "/": Home,
   "/solutions": Solutions,
   "/solutions/core-banking": CoreBanking,
   "/solutions/fahim-ai": FahimAI,
