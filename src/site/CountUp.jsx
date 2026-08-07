@@ -10,23 +10,30 @@ export default function CountUp({ to, prefix = "", suffix = "" }) {
     const element = ref.current;
     if (!element) return;
 
-    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    if (reduceMotion || !("IntersectionObserver" in window)) {
+    const media = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    let frame;
+    let observer;
+    let start;
+    let started = false;
+
+    const finish = () => {
+      if (frame) cancelAnimationFrame(frame);
+      observer?.disconnect();
       setValue(to);
+    };
+
+    if (media?.matches || !("IntersectionObserver" in window)) {
+      finish();
       return;
     }
 
     const rect = element.getBoundingClientRect();
     if (rect.top <= window.innerHeight + 60) {
-      setValue(to);
+      finish();
       return;
     }
 
-    let frame;
-    let start;
-    let started = false;
     setValue(0);
-
     const animate = () => {
       if (started) return;
       started = true;
@@ -41,21 +48,32 @@ export default function CountUp({ to, prefix = "", suffix = "" }) {
       frame = requestAnimationFrame(step);
     };
 
-    const observer = new IntersectionObserver(
+    observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry?.isIntersecting) return;
         observer.disconnect();
         animate();
       },
-      { rootMargin: "0px 0px 60px 0px", threshold: 0.01 }
+      { rootMargin: "0px 0px 60px 0px", threshold: 0.01 },
     );
 
     observer.observe(element);
+    const onMotionChange = (event) => {
+      if (event.matches) finish();
+    };
+    media?.addEventListener?.("change", onMotionChange);
+
     return () => {
-      observer.disconnect();
+      observer?.disconnect();
       if (frame) cancelAnimationFrame(frame);
+      media?.removeEventListener?.("change", onMotionChange);
     };
   }, [to]);
 
-  return <span ref={ref}>{prefix}{value}{suffix}</span>;
+  const finalValue = `${prefix}${to}${suffix}`;
+  return (
+    <span ref={ref} aria-label={finalValue}>
+      <span aria-hidden="true">{prefix}{value}{suffix}</span>
+    </span>
+  );
 }

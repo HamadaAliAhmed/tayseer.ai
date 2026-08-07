@@ -1,14 +1,26 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { Toaster } from "@/components/ui/sonner";
 
 export default function ClientRuntime() {
   const pathname = usePathname();
+  const isInitialRoute = useRef(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    if (isInitialRoute.current) {
+      isInitialRoute.current = false;
+      return;
+    }
+
+    const frame = requestAnimationFrame(() => {
+      document.getElementById("main-content")?.focus({ preventScroll: true });
+    });
+
+    return () => cancelAnimationFrame(frame);
   }, [pathname]);
 
   useEffect(() => {
