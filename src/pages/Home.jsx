@@ -174,7 +174,7 @@ export default function Home() {
                 Established in 2016, Tayseer Innovations emerges as a premier FinTech company in the UAE. We specialize in elevating businesses through advanced financial technology solutions, enhancing financial accessibility and fostering regional growth. As more than just a service provider, we position ourselves as your committed ally in the digital landscape, dedicated to facilitating your journey towards digital excellence. Our approach exceeds traditional service; we engage in a partnership that jointly shapes your digital destiny.
               </p>
               <Link to="/about" className="mt-8 inline-flex items-center gap-2 font-jbmono text-[12px] uppercase tracking-widest transition-colors hover:text-white" style={{ color: T.signal }} data-testid="about-read-more">
-                Read More <ArrowRight size={14} />
+                Read more about Tayseer <ArrowRight size={14} />
               </Link>
             </Reveal>
           </div>

@@ -35,7 +35,11 @@ export const Footer = () => (
           <div className="space-y-4 text-sm" style={{ color: T.muted }}>
             <p className="leading-relaxed">Saudi Arabia — Office 7, 2nd Floor, Selam Building, Prince Saad bin Abdulrahman Alawal Branch Road, Al Rawabi, Riyadh, KSA</p>
             <p className="leading-relaxed">UAE — 601, One Lake Plaza, Cluster T, JLT, Dubai, UAE</p>
-            <p className="font-jbmono text-[12px]"><a href="tel:+966555203079" className="hover:text-white">+966 555203079</a><br /><a href="tel:+97143997558" className="hover:text-white">+971 43997558</a><br /><a href="mailto:info@tayseer.me" className="hover:text-white">info@tayseer.me</a></p>
+            <div className="flex flex-col items-start font-jbmono text-[12px]">
+              <a href="tel:+966555203079" className="inline-block py-2 hover:text-white">+966 555203079</a>
+              <a href="tel:+97143997558" className="inline-block py-2 hover:text-white">+971 43997558</a>
+              <a href="mailto:info@tayseer.me" className="inline-block py-2 hover:text-white">info@tayseer.me</a>
+            </div>
           </div>
         </div>
       </div>

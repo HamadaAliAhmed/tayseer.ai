@@ -1,0 +1,10 @@
+# Tayseer Innovations
+
+> Tayseer Innovations is a fintech company based in Saudi Arabia and the UAE, building AI and digital banking solutions for financial institutions across the region.
+
+## Pages
+
+- [Home](https://tayseerdemo.xyz/): Overview of Tayseer Innovations and its AI and digital banking solutions.
+- [Solutions](https://tayseerdemo.xyz/solutions): Core Banking, Fahim AI, MBuke, Managed Services, Banking Systems, and Software Management Systems.
+- [About Us](https://tayseerdemo.xyz/about): Company background, mission, and what Tayseer stands for.
+- [Connect](https://tayseerdemo.xyz/connect): Contact details and office locations in Saudi Arabia and the UAE.
