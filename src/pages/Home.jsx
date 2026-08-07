@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import NextLink from "next/link";
-import { motion, useInView } from "framer-motion";
 import {
   ArrowRight, ArrowUpRight, Sparkles, BarChart3, ShieldCheck, Workflow, Target,
   Users, Eye, BadgeCheck, Server, Cloud, Quote,
 } from "lucide-react";
 import { Reveal, LineReveal, Marquee } from "@/site/motion";
+import { CountUp } from "@/site/ui";
 import { toast } from "sonner";
 import { T } from "@/site/theme";
 import { DataGridArt, ContactAccentArt } from "@/site/DecorativeArt";
@@ -56,26 +56,6 @@ const TESTIMONIALS = [
   { name: "Amd Ali", role: "IT Sector Manager", q: "The scalable products and services from Tayseer Innovations have seamlessly adapted to our evolving needs, proving essential to our growth. Their dedicated support team has been pivotal not only in smooth implementation but also as a partner in our ongoing success." },
 ];
 
-const CountUp = ({ to, suffix }) => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
-  const [v, setV] = useState(0);
-  useEffect(() => {
-    if (!inView) return;
-    let raf, start;
-    const dur = 1600;
-    const step = (ts) => {
-      if (!start) start = ts;
-      const p = Math.min(1, (ts - start) / dur);
-      setV(Math.floor((1 - Math.pow(1 - p, 3)) * to));
-      if (p < 1) raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [inView, to]);
-  return <span ref={ref}>{v}{suffix}</span>;
-};
-
 const SectionLabel = ({ children }) => (
   <div className="mb-6 flex items-center gap-3 font-jbmono text-[12px] uppercase tracking-[0.25em]" style={{ color: T.signal }}>
     <span className="h-1.5 w-1.5" style={{ background: T.green }} />{children}
@@ -102,7 +82,15 @@ export default function Home() {
   return (
     <div style={{ background: T.bg, color: T.text }} className="font-archivo">
       <section className="grain relative min-h-screen overflow-hidden">
-        <img src="https://static.prod-images.emergentagent.com/jobs/820ed89a-f907-42ba-8029-9fc496755307/images/d7082aa064a573f30c37c34174e7d046c75aa40b56150ce1a6aa66cb5aa906b2.jpeg" alt="" className="pointer-events-none absolute right-0 top-0 hidden h-full w-2/3 object-cover object-right opacity-90 md:block" style={{ maskImage: "linear-gradient(90deg,transparent,#000 55%)", WebkitMaskImage: "linear-gradient(90deg,transparent,#000 55%)" }} />
+        <Image
+          src="https://static.prod-images.emergentagent.com/jobs/820ed89a-f907-42ba-8029-9fc496755307/images/d7082aa064a573f30c37c34174e7d046c75aa40b56150ce1a6aa66cb5aa906b2.jpeg"
+          alt=""
+          fill
+          priority
+          sizes="(min-width: 768px) 66vw, 1px"
+          className="pointer-events-none absolute right-0 top-0 hidden object-cover object-right opacity-90 md:block"
+          style={{ maskImage: "linear-gradient(90deg,transparent,#000 55%)", WebkitMaskImage: "linear-gradient(90deg,transparent,#000 55%)" }}
+        />
         <div className="hairline-grid absolute inset-0" style={{ "--hl": T.hl, backgroundSize: "8.33% 6rem" }} />
         <div className="pointer-events-none absolute -left-40 top-1/3 h-[520px] w-[520px] rounded-full" style={{ background: T.signal, filter: "blur(220px)", opacity: 0.04 }} />
         <div className="relative mx-auto flex min-h-screen max-w-[1400px] flex-col justify-center px-6 pt-28 pb-20 md:px-12">
@@ -110,14 +98,14 @@ export default function Home() {
           <h1 className="max-w-5xl text-[13vw] font-extrabold uppercase leading-[0.88] tracking-[-0.03em] sm:text-7xl lg:text-[7rem]">
             <LineReveal lines={["Future-ready AI", <>&amp; Digital <span style={{ color: T.signal }}>Solutions</span></>]} />
           </h1>
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7, duration: 0.8 }} className="mt-10 flex flex-wrap items-center gap-4">
+          <div className="phase3-hero-actions mt-10 flex flex-wrap items-center gap-4">
             <Link to="/connect" data-testid="hero-cta" className="group inline-flex items-center gap-2 px-8 py-4 text-sm font-semibold uppercase tracking-wider transition-transform hover:-translate-y-0.5" style={{ background: T.signal, color: T.bg }}>
               Submit A Query <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
             </Link>
             <Link to="/solutions" className="inline-flex items-center gap-2 border px-8 py-4 text-sm font-semibold uppercase tracking-wider transition-colors hover:border-[#0D5A8C]" style={{ borderColor: "rgba(238,241,244,0.2)" }}>
               View All Services
             </Link>
-          </motion.div>
+          </div>
         </div>
         <div className="absolute bottom-0 w-full border-t py-4 font-jbmono text-[11px] uppercase tracking-[0.3em]" style={{ borderColor: T.border, color: T.faint }}>
           <Marquee items={SERVICES.map((s) => s.name)} speed={45} />
