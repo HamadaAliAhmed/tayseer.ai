@@ -1,8 +1,5 @@
 "use client";
 
-import ManagedServices from "@/pages/ManagedServices";
-import BankingSystems from "@/pages/BankingSystems";
-import SoftwareManagementSystems from "@/pages/SoftwareManagementSystems";
 import About from "@/pages/About";
 import Connect from "@/pages/Connect";
 import Careers from "@/pages/Careers";
@@ -12,9 +9,6 @@ import { Privacy, Terms } from "@/pages/Legal";
 import PageStub from "@/site/PageStub";
 
 const staticRoutes = {
-  "/solutions/managed-services": ManagedServices,
-  "/solutions/banking-systems": BankingSystems,
-  "/solutions/software-management-systems": SoftwareManagementSystems,
   "/about": About,
   "/connect": Connect,
   "/careers": Careers,
