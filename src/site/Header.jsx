@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { ChevronDown, Menu, X, ArrowRight } from "lucide-react";
@@ -13,25 +13,6 @@ export const Header = () => {
   const [mSol, setMSol] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-
-  useEffect(() => {
-    const routes = Array.from(new Set([
-      "/solutions",
-      "/connect",
-      ...SOLUTIONS.map((s) => s.to),
-      ...NAV.filter((n) => !n.children).map((n) => n.to),
-    ]));
-
-    const prefetch = () => routes.forEach((route) => router.prefetch(route));
-
-    if ("requestIdleCallback" in window) {
-      const id = window.requestIdleCallback(prefetch, { timeout: 1500 });
-      return () => window.cancelIdleCallback?.(id);
-    }
-
-    const id = window.setTimeout(prefetch, 350);
-    return () => window.clearTimeout(id);
-  }, [router]);
 
   const warmRoute = (href) => router.prefetch(href);
 
