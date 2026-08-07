@@ -1,6 +1,7 @@
+"use client";
+
 import { motion } from "framer-motion";
 
-// Section scroll-reveal + kinetic primitives for Direction B.
 export const Reveal = ({ children, delay = 0, y = 24, className = "", as = "div" }) => {
   const M = motion[as] || motion.div;
   return (
@@ -16,7 +17,6 @@ export const Reveal = ({ children, delay = 0, y = 24, className = "", as = "div"
   );
 };
 
-// Masked line-by-line reveal used in hero headlines.
 export const LineReveal = ({ lines, className = "", stagger = 0.11, animate = "onload" }) => {
   const variants = {
     hidden: { y: "110%" },
@@ -36,7 +36,6 @@ export const LineReveal = ({ lines, className = "", stagger = 0.11, animate = "o
   );
 };
 
-// Slow editorial marquee.
 export const Marquee = ({ items, speed = 40, className = "", sep = "/" }) => (
   <div className={`overflow-hidden ${className}`}>
     <motion.div
