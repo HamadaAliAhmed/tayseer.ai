@@ -13,11 +13,6 @@ const nextConfig = {
       { protocol: "https", hostname: "static.prod-images.emergentagent.com" }
     ]
   },
-  async rewrites() {
-    return [
-      { source: "/opengraph-image", destination: "/opengraph-image.svg" }
-    ];
-  },
   async headers() {
     const immutable = [
       { key: "Cache-Control", value: "public, max-age=31536000, immutable" }
@@ -26,7 +21,14 @@ const nextConfig = {
     return [
       { source: "/fonts/:path*", headers: immutable },
       { source: "/logo-light.svg", headers: immutable },
-      { source: "/opengraph-image.svg", headers: immutable }
+      { source: "/opengraph-image.svg", headers: immutable },
+      {
+        source: "/opengraph-image",
+        headers: [
+          ...immutable,
+          { key: "Content-Type", value: "image/svg+xml; charset=utf-8" }
+        ]
+      }
     ];
   }
 };
