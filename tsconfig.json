@@ -27,5 +27,5 @@
     "src/**/*.jsx",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "src/main.jsx", "src/App.jsx"]
+  "exclude": ["node_modules"]
 }
