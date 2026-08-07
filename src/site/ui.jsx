@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { useInView, useReducedMotion } from "framer-motion";
 import { Reveal, LineReveal } from "./motion";
 import { T } from "./theme";
 
@@ -14,38 +13,63 @@ export const SectionLabel = ({ children }) => (
 
 export const CountUp = ({ to, prefix = "", suffix = "" }) => {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
-  const reduceMotion = useReducedMotion();
   const [v, setV] = useState(to);
-  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    setReady(true);
-    if (!reduceMotion && !inView) setV(0);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    const el = ref.current;
+    if (!el) return;
 
-  useEffect(() => {
-    if (!ready || !inView || reduceMotion) {
-      if (reduceMotion) setV(to);
+    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      setV(to);
       return;
     }
 
     let raf;
     let start;
-    const from = v >= to ? 0 : v;
-    const dur = 1600;
+    let started = false;
 
-    const step = (ts) => {
-      if (!start) start = ts;
-      const p = Math.min(1, (ts - start) / dur);
-      const eased = 1 - Math.pow(1 - p, 3);
-      setV(Math.floor(from + (to - from) * eased));
-      if (p < 1) raf = requestAnimationFrame(step);
+    const animate = () => {
+      if (started) return;
+      started = true;
+      setV(0);
+      const duration = 1600;
+
+      const step = (ts) => {
+        if (!start) start = ts;
+        const p = Math.min(1, (ts - start) / duration);
+        const eased = 1 - Math.pow(1 - p, 3);
+        setV(Math.floor(to * eased));
+        if (p < 1) raf = requestAnimationFrame(step);
+      };
+
+      raf = requestAnimationFrame(step);
     };
 
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [inView, ready, reduceMotion, to]);
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= window.innerHeight + 60) {
+      // Keep the SSR value stable for immediately visible counters; animation is
+      // most valuable for counters encountered later while scrolling.
+      setV(to);
+      return;
+    }
+
+    setV(0);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+        observer.disconnect();
+        animate();
+      },
+      { rootMargin: "0px 0px 60px 0px", threshold: 0.01 }
+    );
+
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [to]);
 
   return <span ref={ref}>{prefix}{v}{suffix}</span>;
 };
