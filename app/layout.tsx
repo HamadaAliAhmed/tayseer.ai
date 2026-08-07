@@ -1,16 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, Manrope } from "next/font/google";
+import { Archivo, JetBrains_Mono } from "next/font/google";
+import { SiteFooter } from "@/components/site/SiteFooter";
+import { SiteHeader } from "@/components/site/SiteHeader";
 import "./globals.css";
 
-const manrope = Manrope({
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-brand",
   display: "swap",
 });
 
-const mono = IBM_Plex_Mono({
+const mono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "700"],
   variable: "--font-mono",
   display: "swap",
 });
@@ -46,9 +48,7 @@ export const metadata: Metadata = {
     "remittance",
     "fintech UAE",
   ],
-  alternates: {
-    canonical: "/",
-  },
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -64,27 +64,26 @@ export const metadata: Metadata = {
     description:
       "Technology that moves banking forward — from core banking and digital channels to intelligent payment infrastructure and AI.",
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#090b0e",
+  themeColor: "#090B0E",
   colorScheme: "dark",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${manrope.variable} ${mono.variable}`}>
-      <body className="font-[var(--font-sans)]">
+    <html lang="en" className={`${archivo.variable} ${mono.variable}`}>
+      <body className="font-[var(--font-brand)]">
         <a className="skip-link" href="#main-content">
           Skip to content
         </a>
+        <SiteHeader />
         {children}
+        <SiteFooter />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
