@@ -7,6 +7,15 @@ import { ChevronDown, Menu, X, ArrowRight } from "lucide-react";
 import { Logo } from "./Logo";
 import { NAV, SOLUTIONS, T } from "./theme";
 
+const focusableSelector = [
+  "a[href]",
+  "button:not([disabled])",
+  "input:not([disabled])",
+  "select:not([disabled])",
+  "textarea:not([disabled])",
+  "[tabindex]:not([tabindex='-1'])",
+].join(",");
+
 export const Header = () => {
   const [open, setOpen] = useState(false);
   const [solOpen, setSolOpen] = useState(false);
@@ -14,7 +23,9 @@ export const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
   const solutionsGroupRef = useRef(null);
+  const solutionsTriggerRef = useRef(null);
   const mobileToggleRef = useRef(null);
+  const mobileNavRef = useRef(null);
 
   const warmRoute = (href) => router.prefetch(href);
 
@@ -27,27 +38,84 @@ export const Header = () => {
   useEffect(() => {
     if (!open) return;
 
+    const nav = mobileNavRef.current;
+    const firstFocusable = nav?.querySelector(focusableSelector);
+    firstFocusable?.focus();
+
     const onKeyDown = (event) => {
-      if (event.key !== "Escape") return;
-      setOpen(false);
-      setMSol(false);
-      mobileToggleRef.current?.focus();
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setOpen(false);
+        setMSol(false);
+        mobileToggleRef.current?.focus();
+        return;
+      }
+
+      if (event.key !== "Tab" || !nav) return;
+      const focusable = [...nav.querySelectorAll(focusableSelector)].filter(
+        (element) => element.offsetParent !== null,
+      );
+      if (!focusable.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
 
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
-  }, [open]);
+  }, [open, mSol]);
 
   const handleSolutionsBlur = (event) => {
-    if (!solutionsGroupRef.current?.contains(event.relatedTarget)) {
-      setSolOpen(false);
-    }
+    if (!solutionsGroupRef.current?.contains(event.relatedTarget)) setSolOpen(false);
+  };
+
+  const focusSolutionLink = (index) => {
+    const links = solutionsGroupRef.current?.querySelectorAll("#desktop-solutions-menu a");
+    if (!links?.length) return;
+    const target = Math.max(0, Math.min(index, links.length - 1));
+    links[target]?.focus();
   };
 
   const handleSolutionsKeyDown = (event) => {
+    const links = [...(solutionsGroupRef.current?.querySelectorAll("#desktop-solutions-menu a") || [])];
+    const currentIndex = links.indexOf(document.activeElement);
+
     if (event.key === "Escape") {
+      event.preventDefault();
       setSolOpen(false);
-      event.currentTarget.querySelector("a")?.focus();
+      solutionsTriggerRef.current?.focus();
+      return;
+    }
+
+    if (event.currentTarget === solutionsGroupRef.current && event.target === solutionsTriggerRef.current) {
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        setSolOpen(true);
+        requestAnimationFrame(() => focusSolutionLink(0));
+      }
+      return;
+    }
+
+    if (currentIndex < 0) return;
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      focusSolutionLink((currentIndex + 1) % links.length);
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      focusSolutionLink((currentIndex - 1 + links.length) % links.length);
+    } else if (event.key === "Home") {
+      event.preventDefault();
+      focusSolutionLink(0);
+    } else if (event.key === "End") {
+      event.preventDefault();
+      focusSolutionLink(links.length - 1);
     }
   };
 
@@ -71,6 +139,7 @@ export const Header = () => {
             onKeyDown={handleSolutionsKeyDown}
           >
             <Link
+              ref={solutionsTriggerRef}
               href="/solutions"
               prefetch
               onFocus={() => warmRoute("/solutions")}
@@ -78,13 +147,14 @@ export const Header = () => {
               aria-haspopup="true"
               aria-expanded={solOpen}
               aria-controls="desktop-solutions-menu"
+              aria-current={pathname === "/solutions" ? "page" : undefined}
               className="flex min-h-11 items-center gap-1.5 rounded-sm text-[13px] uppercase tracking-widest transition-colors"
               style={{ color: pathname.startsWith("/solutions") ? T.signal : T.muted }}
             >
               Solutions <ChevronDown aria-hidden="true" size={14} className="transition-transform duration-200" style={{ transform: solOpen ? "rotate(180deg)" : "none" }} />
             </Link>
             {solOpen && (
-              <div id="desktop-solutions-menu" data-testid="solutions-dropdown" className="absolute left-1/2 top-full w-[420px] -translate-x-1/2 pt-4">
+              <div id="desktop-solutions-menu" data-testid="solutions-dropdown" aria-label="Solutions" className="absolute left-1/2 top-full w-[420px] -translate-x-1/2 pt-4">
                 <div className="grid grid-cols-1 gap-1 rounded-lg border p-2 shadow-xl" style={{ background: T.panel, borderColor: T.border }}>
                   {SOLUTIONS.map((s) => (
                     <Link
@@ -94,6 +164,7 @@ export const Header = () => {
                       data-testid={`nav-sol-${s.to.split("/").pop()}`}
                       onMouseEnter={() => warmRoute(s.to)}
                       onFocus={() => warmRoute(s.to)}
+                      aria-current={pathname === s.to ? "page" : undefined}
                       className="group flex min-h-11 items-center justify-between rounded-md px-4 py-3 transition-colors hover:bg-white/5"
                     >
                       <div>
@@ -154,7 +225,7 @@ export const Header = () => {
       </div>
 
       {open && (
-        <nav id="mobile-navigation" data-testid="mobile-menu" aria-label="Mobile navigation" className="overflow-hidden border-t md:hidden" style={{ borderColor: T.border, background: T.panel }}>
+        <nav ref={mobileNavRef} id="mobile-navigation" data-testid="mobile-menu" aria-label="Mobile navigation" className="max-h-[calc(100vh-76px)] overflow-y-auto border-t md:hidden" style={{ borderColor: T.border, background: T.panel }}>
           <div className="px-6 py-4">
             <button
               type="button"
@@ -169,9 +240,9 @@ export const Header = () => {
             </button>
             {mSol && (
               <div id="mobile-solutions-menu" className="overflow-hidden pl-4">
-                <Link href="/solutions" prefetch onClick={() => setOpen(false)} className="flex min-h-11 items-center rounded-sm py-2 text-sm" style={{ color: T.signal }}>All solutions</Link>
+                <Link href="/solutions" prefetch onClick={() => setOpen(false)} aria-current={pathname === "/solutions" ? "page" : undefined} className="flex min-h-11 items-center rounded-sm py-2 text-sm" style={{ color: T.signal }}>All solutions</Link>
                 {SOLUTIONS.map((s) => (
-                  <Link key={s.to} href={s.to} prefetch onClick={() => setOpen(false)} data-testid={`m-nav-sol-${s.to.split("/").pop()}`} className="flex min-h-11 items-center rounded-sm py-2 text-sm" style={{ color: T.muted }}>{s.label}</Link>
+                  <Link key={s.to} href={s.to} prefetch onClick={() => setOpen(false)} aria-current={pathname === s.to ? "page" : undefined} data-testid={`m-nav-sol-${s.to.split("/").pop()}`} className="flex min-h-11 items-center rounded-sm py-2 text-sm" style={{ color: T.muted }}>{s.label}</Link>
                 ))}
               </div>
             )}
