@@ -8,6 +8,7 @@ const __dirname = path.dirname(__filename);
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  pageExtensions: ["ts", "tsx"],
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
