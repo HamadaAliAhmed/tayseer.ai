@@ -90,6 +90,27 @@
   }
 }
 
+@keyframes hero-actions-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.phase3-hero-actions {
+  animation: hero-actions-in 0.8s 0.7s both cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phase3-hero-actions {
+    animation: none;
+  }
+}
+
 /* --- Reconstructed decorative utilities ---
    Not present in the recovered source map; `grain` and `hairline-grid`
    classNames appear throughout src/site and src/pages with no matching CSS.
