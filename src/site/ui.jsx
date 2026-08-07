@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
 import { Reveal, LineReveal } from "./motion";
@@ -29,7 +31,6 @@ export const CountUp = ({ to, prefix = "", suffix = "" }) => {
   return <span ref={ref}>{prefix}{v}{suffix}</span>;
 };
 
-// Consistent inner-page hero: breadcrumb + title + optional tagline/lead.
 export const InnerHero = ({ index, crumbs, title, tagline, lead }) => (
   <section className="grain relative overflow-hidden border-b" style={{ background: T.bg, borderColor: T.border }}>
     <div className="hairline-grid absolute inset-0" style={{ "--hl": T.hl, backgroundSize: "8.33% 6rem" }} />
