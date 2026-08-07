@@ -76,7 +76,7 @@ export default function Home() {
         <div className="relative mx-auto flex min-h-screen max-w-[1400px] flex-col justify-center px-6 pt-28 pb-20 md:px-12">
           <SectionLabel>Innovative approach</SectionLabel>
           <h1 className="max-w-5xl text-[13vw] font-extrabold uppercase leading-[0.88] tracking-[-0.03em] sm:text-7xl lg:text-[7rem]">
-            <LineReveal lines={["Future-ready AI", <>&amp; Digital <span style={{ color: T.signal }}>Solutions</span></>]} />
+            <LineReveal lines={["Future-ready AI", <span key="digital-solutions">&amp; Digital <span style={{ color: T.signal }}>Solutions</span></span>]} />
           </h1>
           <div className="phase3-hero-actions mt-10 flex flex-wrap items-center gap-4">
             <Link href="/connect" data-testid="hero-cta" className="group inline-flex items-center gap-2 px-8 py-4 text-sm font-semibold uppercase tracking-wider transition-transform hover:-translate-y-0.5" style={{ background: T.signal, color: T.bg }}>
@@ -199,9 +199,9 @@ export default function Home() {
             {DEPLOY.map((d, i) => (
               <Reveal key={d.t} delay={i * 0.08}>
                 <div className="group flex h-full flex-col rounded-lg border p-10 transition-colors hover:border-[#0D5A8C]" style={{ borderColor: T.border, background: T.panel }}>
-                  <div className="flex h-14 w-14 items-center justify-center rounded-md" style={{ background: "rgba(13,90,140,0.12)", color: T.signal }}><d.icon size={26} /></div>
+                  <d.icon size={24} style={{ color: T.signal }} />
                   <h3 className="mt-6 text-2xl font-semibold">{d.t}</h3>
-                  <p className="mt-3 max-w-md text-base leading-relaxed" style={{ color: T.muted }}>{d.d}</p>
+                  <p className="mt-4 max-w-xl text-sm leading-relaxed" style={{ color: T.muted }}>{d.d}</p>
                 </div>
               </Reveal>
             ))}
@@ -211,18 +211,19 @@ export default function Home() {
 
       <section className="relative border-t px-6 py-24 md:px-12" style={{ borderColor: T.border, background: T.panel }}>
         <div className="mx-auto max-w-[1400px]">
-          <Reveal><SectionLabel>Our Client Speak</SectionLabel></Reveal>
-          <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
+          <Reveal><SectionLabel>Testimonials</SectionLabel></Reveal>
+          <Reveal delay={0.05}><h2 className="text-4xl font-bold uppercase leading-[0.95] tracking-[-0.02em] sm:text-5xl">What Our Partners Say</h2></Reveal>
+          <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-2">
             {TESTIMONIALS.map((t, i) => (
-              <Reveal key={t.name} delay={i * 0.06}>
-                <figure data-testid={`testimonial-${i}`} className="flex h-full flex-col rounded-lg border p-8" style={{ borderColor: T.border, background: T.bg }}>
-                  <Quote size={26} style={{ color: T.signal }} />
+              <Reveal key={t.name} delay={(i % 2) * 0.08}>
+                <div className="flex h-full flex-col rounded-lg border p-8" style={{ borderColor: T.border, background: T.bg }}>
+                  <Quote size={24} style={{ color: T.signal }} />
                   <blockquote className="mt-5 flex-1 text-base leading-relaxed" style={{ color: T.muted }}>{t.q}</blockquote>
-                  <figcaption className="mt-6 border-t pt-5" style={{ borderColor: T.border }}>
+                  <div className="mt-8 border-t pt-5" style={{ borderColor: T.border }}>
                     <div className="font-semibold">{t.name}</div>
-                    <div className="font-jbmono text-[11px] uppercase tracking-widest" style={{ color: T.faint }}>{t.role}</div>
-                  </figcaption>
-                </figure>
+                    <div className="mt-1 text-sm" style={{ color: T.faint }}>{t.role}</div>
+                  </div>
+                </div>
               </Reveal>
             ))}
           </div>
@@ -230,21 +231,32 @@ export default function Home() {
       </section>
 
       <section className="relative overflow-hidden border-t px-6 py-24 md:px-12" style={{ borderColor: T.border }}>
-        <ContactAccentArt className="pointer-events-none absolute -right-10 top-0 hidden h-64 w-64 opacity-70 lg:block" />
-        <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-14 lg:grid-cols-12">
+        <ContactAccentArt className="pointer-events-none absolute -right-8 top-0 hidden h-72 w-72 opacity-80 lg:block" />
+        <div className="relative mx-auto grid max-w-[1400px] grid-cols-1 gap-14 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <Reveal><SectionLabel>Talk To Us</SectionLabel></Reveal>
             <Reveal delay={0.05}><h2 className="text-4xl font-bold uppercase leading-[0.95] tracking-[-0.02em] sm:text-5xl">How May We Help You!</h2></Reveal>
             <Reveal delay={0.1}>
-              <div className="mt-8 space-y-2 font-jbmono text-sm" style={{ color: T.muted }}>
-                <div><a href="mailto:info@tayseer.me" className="hover:text-white">info@tayseer.me</a></div>
-                <div><a href="tel:+966555203079" className="hover:text-white">+966 555203079</a></div>
-                <div><a href="tel:+97143997558" className="hover:text-white">+971 43997558</a></div>
+              <div className="mt-8 space-y-6 text-sm" style={{ color: T.muted }}>
+                <div>
+                  <div className="mb-1 font-jbmono text-[11px] uppercase tracking-widest" style={{ color: T.faint }}>Saudi Arabia</div>
+                  Office 7, 2nd Floor, Selam Building, Prince Saad bin Abdulrahman Alawal Branch Road, Al Rawabi, Riyadh, Kingdom of Saudi Arabia
+                </div>
+                <div>
+                  <div className="mb-1 font-jbmono text-[11px] uppercase tracking-widest" style={{ color: T.faint }}>UAE</div>
+                  601, One Lake Plaza, Cluster T, JLT, Dubai, UAE
+                </div>
+                <div className="space-y-1 font-jbmono">
+                  <div><a href="mailto:info@tayseer.me" className="hover:text-white">info@tayseer.me</a></div>
+                  <div><a href="tel:+966555203079" className="hover:text-white">+966 555203079</a> · <a href="tel:+97143997558" className="hover:text-white">+971 43997558</a></div>
+                </div>
               </div>
             </Reveal>
           </div>
           <div className="lg:col-span-7">
-            <Reveal delay={0.1}><HomeContactForm /></Reveal>
+            <Reveal delay={0.1}>
+              <HomeContactForm />
+            </Reveal>
           </div>
         </div>
       </section>

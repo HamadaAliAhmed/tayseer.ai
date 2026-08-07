@@ -20,7 +20,15 @@ const nextConfig = {
 
     return [
       { source: "/fonts/:path*", headers: immutable },
-      { source: "/logo-light.svg", headers: immutable }
+      { source: "/logo-light.svg", headers: immutable },
+      { source: "/opengraph-image.svg", headers: immutable },
+      {
+        source: "/opengraph-image",
+        headers: [
+          ...immutable,
+          { key: "Content-Type", value: "image/svg+xml; charset=utf-8" }
+        ]
+      }
     ];
   }
 };
