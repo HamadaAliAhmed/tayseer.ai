@@ -105,7 +105,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </a>
         <div style={{ background: T.bg, color: T.text }} className="min-h-screen font-archivo antialiased">
           <Header />
-          <main id="main-content" data-testid="page-main">{children}</main>
+          <main id="main-content" tabIndex={-1} data-testid="page-main">{children}</main>
           <Footer />
         </div>
         <ClientRuntime />
