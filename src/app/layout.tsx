@@ -1,7 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import "@/index.css";
 import "@/App.css";
-import SiteChrome from "@/site/SiteChrome";
+import { Header } from "@/site/Header";
+import { Footer } from "@/site/Footer";
+import ClientRuntime from "@/site/ClientRuntime";
+import { T } from "@/site/theme";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tayseer.me"),
@@ -40,7 +43,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <a className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-[#5CF0CE] focus:px-4 focus:py-3 focus:text-[#090B0E]" href="#main-content">
           Skip to content
         </a>
-        <SiteChrome>{children}</SiteChrome>
+        <div style={{ background: T.bg, color: T.text }} className="min-h-screen font-archivo antialiased">
+          <Header />
+          <main id="main-content" data-testid="page-main">{children}</main>
+          <Footer />
+        </div>
+        <ClientRuntime />
       </body>
     </html>
   );
