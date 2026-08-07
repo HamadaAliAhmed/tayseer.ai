@@ -1,78 +1,14 @@
-"use client";
-
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
 import { Reveal, LineReveal } from "./motion";
 import { T } from "./theme";
+
+export { default as CountUp } from "./CountUp";
 
 export const SectionLabel = ({ children }) => (
   <div className="mb-6 flex items-center gap-3 font-jbmono text-[12px] uppercase tracking-[0.25em]" style={{ color: T.signal }}>
     <span className="h-1.5 w-1.5" style={{ background: T.green }} />{children}
   </div>
 );
-
-export const CountUp = ({ to, prefix = "", suffix = "" }) => {
-  const ref = useRef(null);
-  const [v, setV] = useState(to);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    if (reduceMotion || !("IntersectionObserver" in window)) {
-      setV(to);
-      return;
-    }
-
-    let raf;
-    let start;
-    let started = false;
-
-    const animate = () => {
-      if (started) return;
-      started = true;
-      setV(0);
-      const duration = 1600;
-
-      const step = (ts) => {
-        if (!start) start = ts;
-        const p = Math.min(1, (ts - start) / duration);
-        const eased = 1 - Math.pow(1 - p, 3);
-        setV(Math.floor(to * eased));
-        if (p < 1) raf = requestAnimationFrame(step);
-      };
-
-      raf = requestAnimationFrame(step);
-    };
-
-    const rect = el.getBoundingClientRect();
-    if (rect.top <= window.innerHeight + 60) {
-      // Keep the SSR value stable for immediately visible counters; animation is
-      // most valuable for counters encountered later while scrolling.
-      setV(to);
-      return;
-    }
-
-    setV(0);
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry?.isIntersecting) return;
-        observer.disconnect();
-        animate();
-      },
-      { rootMargin: "0px 0px 60px 0px", threshold: 0.01 }
-    );
-
-    observer.observe(el);
-    return () => {
-      observer.disconnect();
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, [to]);
-
-  return <span ref={ref}>{prefix}{v}{suffix}</span>;
-};
 
 export const InnerHero = ({ index, crumbs, title, tagline, lead }) => (
   <section className="grain relative overflow-hidden border-b" style={{ background: T.bg, borderColor: T.border }}>
@@ -93,10 +29,10 @@ export const InnerHero = ({ index, crumbs, title, tagline, lead }) => (
     <div className="relative mx-auto max-w-[1400px] px-6 pt-36 pb-20 md:px-12 md:pt-44">
       <Reveal>
         <div className="mb-6 flex flex-wrap items-center gap-2 font-jbmono text-[11px] uppercase tracking-[0.2em]" style={{ color: T.faint }} data-testid="breadcrumb">
-          {crumbs.map((c, i) => (
+          {crumbs.map((crumb, i) => (
             <span key={i} className="flex items-center gap-2">
               {i > 0 && <span style={{ color: T.signal }}>»</span>}
-              <span style={{ color: i === crumbs.length - 1 ? T.signal : T.faint }}>{c}</span>
+              <span style={{ color: i === crumbs.length - 1 ? T.signal : T.faint }}>{crumb}</span>
             </span>
           ))}
         </div>
