@@ -9,6 +9,7 @@ const BREADCRUMB_HREFS = {
   Home: "/",
   Solutions: "/solutions",
   Blog: "/blog",
+  "Blogs and Resources": "/blog",
   About: "/about",
   Careers: "/careers",
   Connect: "/connect",
