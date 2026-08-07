@@ -3,26 +3,36 @@
 @tailwind utilities;
 
 :root {
-  --background: 222 24% 5%;
-  --foreground: 210 20% 96%;
-  --card: 220 20% 8%;
-  --card-foreground: 210 20% 96%;
-  --popover: 220 20% 8%;
-  --popover-foreground: 210 20% 96%;
-  --primary: 167 82% 65%;
-  --primary-foreground: 220 24% 5%;
-  --secondary: 220 16% 14%;
-  --secondary-foreground: 210 20% 96%;
-  --muted: 220 16% 14%;
-  --muted-foreground: 216 12% 67%;
-  --accent: 167 82% 65%;
-  --accent-foreground: 220 24% 5%;
+  --brand-bg: #090b0e;
+  --brand-panel: #0e1116;
+  --brand-panel-2: #11161c;
+  --brand-text: #eef1f4;
+  --brand-muted: #a6afba;
+  --brand-faint: #6e7884;
+  --brand-signal: #5cf0ce;
+  --brand-border: rgba(238, 241, 244, 0.10);
+  --brand-highlight: rgba(92, 240, 206, 0.07);
+
+  --background: 222 22% 5%;
+  --foreground: 210 18% 95%;
+  --card: 220 22% 7%;
+  --card-foreground: 210 18% 95%;
+  --popover: 220 22% 7%;
+  --popover-foreground: 210 18% 95%;
+  --primary: 166 83% 65%;
+  --primary-foreground: 220 22% 5%;
+  --secondary: 218 24% 9%;
+  --secondary-foreground: 210 18% 95%;
+  --muted: 218 24% 9%;
+  --muted-foreground: 214 11% 69%;
+  --accent: 166 83% 65%;
+  --accent-foreground: 220 22% 5%;
   --destructive: 0 72% 51%;
   --destructive-foreground: 210 20% 98%;
-  --border: 220 14% 18%;
-  --input: 220 14% 18%;
-  --ring: 167 82% 65%;
-  --radius: 0.75rem;
+  --border: 216 12% 18%;
+  --input: 216 12% 18%;
+  --ring: 166 83% 65%;
+  --radius: 0.5rem;
 }
 
 * {
@@ -31,7 +41,7 @@
 }
 
 html {
-  background: hsl(var(--background));
+  background: var(--brand-bg);
   color-scheme: dark;
   scroll-behavior: smooth;
 }
@@ -40,9 +50,9 @@ body {
   min-height: 100vh;
   margin: 0;
   background:
-    radial-gradient(circle at 85% 10%, rgba(92, 240, 206, 0.08), transparent 28rem),
-    hsl(var(--background));
-  color: hsl(var(--foreground));
+    radial-gradient(circle at 82% 8%, rgba(92, 240, 206, 0.055), transparent 30rem),
+    var(--brand-bg);
+  color: var(--brand-text);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -54,11 +64,27 @@ a {
 
 ::selection {
   background: rgba(92, 240, 206, 0.28);
+  color: var(--brand-text);
 }
 
 :focus-visible {
-  outline: 2px solid #5cf0ce;
+  outline: 2px solid var(--brand-signal);
   outline-offset: 4px;
+}
+
+.brand-grid {
+  background-image:
+    linear-gradient(to right, var(--brand-highlight) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--brand-highlight) 1px, transparent 1px);
+  background-size: 8.33% 6rem;
+}
+
+.brand-eyebrow {
+  font-family: var(--font-mono), monospace;
+  color: var(--brand-signal);
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
 }
 
 .skip-link {
@@ -67,9 +93,8 @@ a {
   top: 1rem;
   z-index: 100;
   transform: translateY(-200%);
-  border-radius: 0.5rem;
-  background: #5cf0ce;
-  color: #08100e;
+  background: var(--brand-signal);
+  color: var(--brand-bg);
   padding: 0.75rem 1rem;
   font-weight: 700;
 }
