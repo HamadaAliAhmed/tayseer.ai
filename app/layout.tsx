@@ -15,6 +15,15 @@ const mono = IBM_Plex_Mono({
   display: "swap",
 });
 
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Tayseer Innovations",
+  url: "https://tayseer.me",
+  description:
+    "Banking technology, digital banking, payments, remittance, AI and managed technology solutions for financial institutions.",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://tayseer.me"),
   title: {
@@ -27,6 +36,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Tayseer Innovations" }],
   creator: "Tayseer Innovations",
   publisher: "Tayseer Innovations",
+  manifest: "/manifest.webmanifest",
   keywords: [
     "banking technology",
     "core banking",
@@ -75,6 +85,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           Skip to content
         </a>
         {children}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
       </body>
     </html>
   );
