@@ -1,9 +1,5 @@
 "use client";
 
-import Solutions from "@/pages/Solutions";
-import CoreBanking from "@/pages/CoreBanking";
-import FahimAI from "@/pages/FahimAI";
-import MBuke from "@/pages/MBuke";
 import ManagedServices from "@/pages/ManagedServices";
 import BankingSystems from "@/pages/BankingSystems";
 import SoftwareManagementSystems from "@/pages/SoftwareManagementSystems";
@@ -16,10 +12,6 @@ import { Privacy, Terms } from "@/pages/Legal";
 import PageStub from "@/site/PageStub";
 
 const staticRoutes = {
-  "/solutions": Solutions,
-  "/solutions/core-banking": CoreBanking,
-  "/solutions/fahim-ai": FahimAI,
-  "/solutions/mbuke": MBuke,
   "/solutions/managed-services": ManagedServices,
   "/solutions/banking-systems": BankingSystems,
   "/solutions/software-management-systems": SoftwareManagementSystems,
