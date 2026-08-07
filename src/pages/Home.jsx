@@ -1,18 +1,14 @@
 import Image from "next/image";
-import NextLink from "next/link";
+import Link from "next/link";
 import {
   ArrowRight, ArrowUpRight, Sparkles, BarChart3, ShieldCheck, Workflow, Target,
   Users, Eye, BadgeCheck, Server, Cloud, Quote,
 } from "lucide-react";
 import { Reveal, LineReveal, Marquee } from "@/site/motion";
 import { CountUp } from "@/site/ui";
-import { toast } from "sonner";
 import { T } from "@/site/theme";
 import { DataGridArt, ContactAccentArt } from "@/site/DecorativeArt";
-
-const Link = ({ to, children, ...props }) => <NextLink href={to} {...props}>{children}</NextLink>;
-
-// ALL copy below is SOURCED from the live tayseer.me mirror unless tagged otherwise.
+import HomeContactForm from "@/site/HomeContactForm";
 
 const SERVICES = [
   { name: "Core Banking", tag: "Future-Proof Core Banking. Growth Unleashed.", to: "/solutions/core-banking" },
@@ -63,22 +59,6 @@ const SectionLabel = ({ children }) => (
 );
 
 export default function Home() {
-  const handleContact = async (e) => {
-    e.preventDefault();
-    const f = e.target;
-    const fd = new FormData(f);
-    const p = { name: fd.get("name"), email: fd.get("email"), phone: "", organization: fd.get("company") || "—", message: fd.get("message") };
-    try {
-      const res = await fetch("/api/connect", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(p) });
-      const d = await res.json().catch(() => ({}));
-      if (!res.ok || !d.ok) throw new Error(d.error || "send failed");
-      toast.success("Thanks — your message has been sent.");
-      f.reset();
-    } catch (err) {
-      toast.message("Opening your email app to send your message…");
-      window.location.href = `mailto:info@tayseer.me?subject=${encodeURIComponent("Website Query - " + (p.name || ""))}&body=${encodeURIComponent((p.message || "") + "\n\n" + (p.email || ""))}`;
-    }
-  };
   return (
     <div style={{ background: T.bg, color: T.text }} className="font-archivo">
       <section className="grain relative min-h-screen overflow-hidden">
@@ -99,10 +79,10 @@ export default function Home() {
             <LineReveal lines={["Future-ready AI", <>&amp; Digital <span style={{ color: T.signal }}>Solutions</span></>]} />
           </h1>
           <div className="phase3-hero-actions mt-10 flex flex-wrap items-center gap-4">
-            <Link to="/connect" data-testid="hero-cta" className="group inline-flex items-center gap-2 px-8 py-4 text-sm font-semibold uppercase tracking-wider transition-transform hover:-translate-y-0.5" style={{ background: T.signal, color: T.bg }}>
+            <Link href="/connect" data-testid="hero-cta" className="group inline-flex items-center gap-2 px-8 py-4 text-sm font-semibold uppercase tracking-wider transition-transform hover:-translate-y-0.5" style={{ background: T.signal, color: T.bg }}>
               Submit A Query <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
             </Link>
-            <Link to="/solutions" className="inline-flex items-center gap-2 border px-8 py-4 text-sm font-semibold uppercase tracking-wider transition-colors hover:border-[#0D5A8C]" style={{ borderColor: "rgba(238,241,244,0.2)" }}>
+            <Link href="/solutions" className="inline-flex items-center gap-2 border px-8 py-4 text-sm font-semibold uppercase tracking-wider transition-colors hover:border-[#0D5A8C]" style={{ borderColor: "rgba(238,241,244,0.2)" }}>
               View All Services
             </Link>
           </div>
@@ -120,7 +100,7 @@ export default function Home() {
               <h2 className="max-w-2xl text-4xl font-bold uppercase leading-[0.95] tracking-[-0.02em] sm:text-5xl">We Have All Your Business Needs Covered</h2>
             </Reveal>
             <Reveal delay={0.1}>
-              <Link to="/solutions" className="inline-flex items-center gap-2 font-jbmono text-[12px] uppercase tracking-widest transition-colors hover:text-white" style={{ color: T.signal }} data-testid="view-all-services">
+              <Link href="/solutions" className="inline-flex items-center gap-2 font-jbmono text-[12px] uppercase tracking-widest transition-colors hover:text-white" style={{ color: T.signal }} data-testid="view-all-services">
                 View All Services <ArrowUpRight size={14} />
               </Link>
             </Reveal>
@@ -128,7 +108,7 @@ export default function Home() {
           <div className="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-lg border sm:grid-cols-2 lg:grid-cols-3" style={{ borderColor: T.border, background: T.border }}>
             {SERVICES.map((s, i) => (
               <Reveal key={s.name} delay={i * 0.05}>
-                <Link to={s.to} data-testid={`service-card-${i}`} className="group flex h-full flex-col justify-between p-8 transition-colors" style={{ background: T.panel }}>
+                <Link href={s.to} data-testid={`service-card-${i}`} className="group flex h-full flex-col justify-between p-8 transition-colors" style={{ background: T.panel }}>
                   <div>
                     <div className="font-jbmono text-[11px]" style={{ color: T.faint }}>0{i + 1}</div>
                     <h3 className="mt-4 text-xl font-semibold group-hover:text-[#0D5A8C]" style={{ transition: "color .2s" }}>{s.name}</h3>
@@ -146,16 +126,14 @@ export default function Home() {
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-14 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <Reveal><SectionLabel>About Us</SectionLabel></Reveal>
-            <Reveal delay={0.05}>
-              <h2 className="text-4xl font-bold uppercase leading-[0.95] tracking-[-0.02em] sm:text-5xl">Born from Innovation, Backed by Strength</h2>
-            </Reveal>
+            <Reveal delay={0.05}><h2 className="text-4xl font-bold uppercase leading-[0.95] tracking-[-0.02em] sm:text-5xl">Born from Innovation, Backed by Strength</h2></Reveal>
           </div>
           <div className="lg:col-span-7">
             <Reveal delay={0.1}>
               <p className="text-lg leading-relaxed" style={{ color: T.muted }}>
                 Established in 2016, Tayseer Innovations emerges as a premier FinTech company in the UAE. We specialize in elevating businesses through advanced financial technology solutions, enhancing financial accessibility and fostering regional growth. As more than just a service provider, we position ourselves as your committed ally in the digital landscape, dedicated to facilitating your journey towards digital excellence. Our approach exceeds traditional service; we engage in a partnership that jointly shapes your digital destiny.
               </p>
-              <Link to="/about" className="mt-8 inline-flex items-center gap-2 font-jbmono text-[12px] uppercase tracking-widest transition-colors hover:text-white" style={{ color: T.signal }} data-testid="about-read-more">
+              <Link href="/about" className="mt-8 inline-flex items-center gap-2 font-jbmono text-[12px] uppercase tracking-widest transition-colors hover:text-white" style={{ color: T.signal }} data-testid="about-read-more">
                 Read more about Tayseer <ArrowRight size={14} />
               </Link>
             </Reveal>
@@ -181,16 +159,12 @@ export default function Home() {
       <section className="relative border-t px-6 py-24 md:px-12" style={{ borderColor: T.border }}>
         <div className="mx-auto max-w-[1400px]">
           <Reveal><SectionLabel>Why Tayseer</SectionLabel></Reveal>
-          <Reveal delay={0.05}>
-            <h2 className="max-w-3xl text-4xl font-bold uppercase leading-[0.95] tracking-[-0.02em] sm:text-5xl">Become Future – Ready With Our Cutting Edge Products &amp; Services</h2>
-          </Reveal>
+          <Reveal delay={0.05}><h2 className="max-w-3xl text-4xl font-bold uppercase leading-[0.95] tracking-[-0.02em] sm:text-5xl">Become Future – Ready With Our Cutting Edge Products &amp; Services</h2></Reveal>
           <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {VALUE_PROPS.map((v, i) => (
               <Reveal key={v.t} delay={i * 0.05}>
                 <div className="flex h-full items-start gap-4 rounded-lg border p-6" style={{ borderColor: T.border, background: T.panel }}>
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md" style={{ background: "rgba(13,90,140,0.12)", color: T.signal }}>
-                    <v.icon size={20} />
-                  </div>
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md" style={{ background: "rgba(13,90,140,0.12)", color: T.signal }}><v.icon size={20} /></div>
                   <div className="pt-1.5 text-base font-medium">{v.t}</div>
                 </div>
               </Reveal>
@@ -270,17 +244,7 @@ export default function Home() {
             </Reveal>
           </div>
           <div className="lg:col-span-7">
-            <Reveal delay={0.1}>
-              <form data-testid="home-contact-form" onSubmit={handleContact} className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <input name="name" required placeholder="Name" data-testid="contact-name" className="rounded-md border bg-transparent px-4 py-3.5 text-sm outline-none focus:border-[#0D5A8C]" style={{ borderColor: T.border, color: T.text }} />
-                <input name="email" type="email" required placeholder="Email" data-testid="contact-email" className="rounded-md border bg-transparent px-4 py-3.5 text-sm outline-none focus:border-[#0D5A8C]" style={{ borderColor: T.border, color: T.text }} />
-                <input name="company" placeholder="Company (optional)" data-testid="contact-company" className="rounded-md border bg-transparent px-4 py-3.5 text-sm outline-none focus:border-[#0D5A8C] sm:col-span-2" style={{ borderColor: T.border, color: T.text }} />
-                <textarea name="message" required rows={4} placeholder="How may we help you?" data-testid="contact-message" className="rounded-md border bg-transparent px-4 py-3.5 text-sm outline-none focus:border-[#0D5A8C] sm:col-span-2" style={{ borderColor: T.border, color: T.text }} />
-                <button type="submit" data-testid="contact-submit" className="inline-flex w-full items-center justify-center gap-2 px-8 py-4 text-sm font-semibold uppercase tracking-wider transition-transform hover:-translate-y-0.5 sm:w-auto" style={{ background: T.signal, color: T.bg }}>
-                  Submit <ArrowRight size={16} />
-                </button>
-              </form>
-            </Reveal>
+            <Reveal delay={0.1}><HomeContactForm /></Reveal>
           </div>
         </div>
       </section>
