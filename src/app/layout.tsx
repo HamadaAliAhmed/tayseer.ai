@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "@/index.css";
 import "@/App.css";
+import "@/performance.css";
 import { Header } from "@/site/Header";
 import { Footer } from "@/site/Footer";
 import StructuredData from "@/site/StructuredData";
