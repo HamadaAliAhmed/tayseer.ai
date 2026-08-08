@@ -47,38 +47,30 @@ export default function CinematicHero() {
           </div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-[500px] lg:col-span-5 lg:max-w-[480px]">
-          <div className="absolute -inset-8 rounded-full blur-3xl" style={{ background: "rgba(13,90,140,.08)" }} />
+        <div className="relative mx-auto w-full max-w-[470px] lg:col-span-5 lg:max-w-[450px]">
+          <div className="absolute -inset-8 rounded-full blur-3xl" style={{ background: "rgba(13,90,140,.10)" }} />
           <div className="relative overflow-hidden rounded-2xl border shadow-xl" style={{ borderColor: T.border, background: T.panel }}>
-            <div className="relative aspect-[4/3] overflow-hidden">
+            <div className="relative aspect-[3/2] overflow-hidden">
               <img
-                src="https://www.tayseer.me/images/about-image1.png"
-                alt="Tayseer Innovations financial technology and digital transformation"
+                src="/tayseer-banking-hero.svg"
+                alt="Tayseer banking technology ecosystem connecting digital banking, core banking, payments, AI, integration and managed services"
                 className="h-full w-full object-cover"
                 loading="eager"
               />
-              <div className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 42%, rgba(247,246,242,.94) 100%)" }} />
-              <div className="absolute bottom-4 left-4 right-4 rounded-xl border p-4 backdrop-blur-md" style={{ borderColor: T.border, background: "rgba(247,246,242,.88)" }}>
-                <div className="flex items-center gap-2 font-jbmono text-[10px] uppercase tracking-[0.2em]" style={{ color: T.signal }}>
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28" style={{ background: "linear-gradient(180deg, transparent, rgba(7,21,42,.9))" }} />
+              <div className="absolute bottom-4 left-4 right-4 rounded-xl border p-4 backdrop-blur-md" style={{ borderColor: "rgba(255,255,255,.16)", background: "rgba(7,21,42,.72)" }}>
+                <div className="flex items-center gap-2 font-jbmono text-[10px] uppercase tracking-[0.2em] text-white/80">
                   <Network size={13} aria-hidden="true" /> Tayseer banking ecosystem
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {CAPABILITIES.map((item) => (
-                    <span key={item} className="rounded-full border px-2.5 py-1 text-[10px]" style={{ borderColor: T.border, color: T.muted, background: T.bg }}>
+                    <span key={item} className="rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-[10px] text-white/80">
                       {item}
                     </span>
                   ))}
                 </div>
               </div>
             </div>
-          </div>
-          <div className="mx-auto mt-4 max-w-[92%] overflow-hidden rounded-xl border" style={{ borderColor: T.border, background: T.panel }}>
-            <img
-              src="https://www.tayseer.me/images/banking-system.png"
-              alt="Banking technology solutions from Tayseer Innovations"
-              className="h-24 w-full object-cover object-center opacity-90 sm:h-28"
-              loading="lazy"
-            />
           </div>
         </div>
       </div>
