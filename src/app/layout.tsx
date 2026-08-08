@@ -6,11 +6,10 @@ import { Header } from "@/site/Header";
 import { Footer } from "@/site/Footer";
 import StructuredData from "@/site/StructuredData";
 import { T } from "@/site/theme";
-
-const siteUrl = "https://tayseer.me";
+import { SITE_ORIGIN, SITE_URL, absoluteUrl } from "@/site/siteConfig";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: SITE_ORIGIN,
   title: {
     default: "Tayseer Innovations | AI & Digital Banking Solutions",
     template: "%s | Tayseer Innovations"
@@ -59,10 +58,10 @@ export const viewport: Viewport = {
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "@id": `${siteUrl}/#organization`,
+  "@id": `${SITE_URL}/#organization`,
   name: "Tayseer Innovations",
-  url: siteUrl,
-  logo: `${siteUrl}/logo-light.svg`,
+  url: SITE_URL,
+  logo: absoluteUrl("/logo-light.svg"),
   email: "info@tayseer.me",
   telephone: ["+966555203079", "+97143997558"],
   description: "Tayseer Innovations provides AI, digital banking, core banking, managed services and financial technology solutions for financial institutions.",
@@ -88,10 +87,10 @@ const organizationSchema = {
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "@id": `${siteUrl}/#website`,
-  url: siteUrl,
+  "@id": `${SITE_URL}/#website`,
+  url: SITE_URL,
   name: "Tayseer Innovations",
-  publisher: { "@id": `${siteUrl}/#organization` },
+  publisher: { "@id": `${SITE_URL}/#organization` },
   inLanguage: "en"
 };
 
