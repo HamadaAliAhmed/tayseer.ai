@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { Toaster } from "@/components/ui/sonner";
 
 export default function ClientRuntime() {
   const pathname = usePathname();
@@ -23,5 +22,5 @@ export default function ClientRuntime() {
     return () => cancelAnimationFrame(frame);
   }, [pathname]);
 
-  return <Toaster theme="dark" position="bottom-right" richColors />;
+  return null;
 }
