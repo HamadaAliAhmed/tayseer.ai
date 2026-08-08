@@ -5,6 +5,9 @@ const nextConfig = {
   compress: true,
   productionBrowserSourceMaps: false,
   pageExtensions: ["ts", "tsx"],
+  experimental: {
+    inlineCss: true
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 86400,
