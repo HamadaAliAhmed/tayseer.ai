@@ -1,6 +1,12 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { T } from "@/site/theme";
+
+const PROOF = [
+  ["15+", "Countries"],
+  ["100+", "Satisfied clients"],
+  ["100+", "Skilled experts"],
+];
 
 export default function CinematicHero() {
   return (
@@ -32,9 +38,8 @@ export default function CinematicHero() {
             </Link>
           </div>
 
-          <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-xs md:mt-9" style={{ color: T.muted }}>
-            <span className="inline-flex items-center gap-2"><ShieldCheck size={14} aria-hidden="true" style={{ color: T.signal }} /> Banking-critical delivery</span>
-            <span className="inline-flex items-center gap-2"><Sparkles size={14} aria-hidden="true" style={{ color: T.signal }} /> AI-enabled transformation</span>
+          <div className="mt-6 grid max-w-xl grid-cols-3 gap-3 border-t pt-5 md:mt-8" style={{ borderColor: T.border }} aria-label="Published Tayseer company figures">
+            {PROOF.map(([value, label]) => <div key={label}><div className="text-lg font-semibold sm:text-xl">{value}</div><div className="mt-1 text-xs leading-tight" style={{ color: T.muted }}>{label}</div></div>)}
           </div>
         </div>
 
