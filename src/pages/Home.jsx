@@ -7,7 +7,6 @@ import InteractiveEcosystem from "@/site/phase7/InteractiveEcosystem";
 import ArchitectureStage from "@/site/phase7/ArchitectureStage";
 import GlobalPresence from "@/site/phase7/GlobalPresence";
 import ClientSuccessStories from "@/site/phase7/ClientSuccessStories";
-import { SpotlightStage } from "@/site/phase7/ExperienceMotion";
 import LatestInsights from "@/site/phase6/LatestInsights";
 import FinalEnterpriseCTA from "@/site/phase6/FinalEnterpriseCTA";
 
@@ -16,16 +15,14 @@ export default function Home() {
     <div style={{ background: T.bg, color: T.text }} className="overflow-x-clip font-archivo">
       <CinematicHero />
       <TransformationStory />
-      <SpotlightStage>
-        <ProductShowcase />
-        <FahimExperience />
-        <InteractiveEcosystem />
-      </SpotlightStage>
+      <div className="defer-render"><ProductShowcase /></div>
+      <div className="defer-render"><FahimExperience /></div>
+      <div className="defer-render"><InteractiveEcosystem /></div>
       <div className="defer-render"><ArchitectureStage /></div>
       <div className="defer-render"><GlobalPresence /></div>
       <div className="defer-render"><ClientSuccessStories /></div>
       <div className="defer-render"><LatestInsights /></div>
-      <FinalEnterpriseCTA />
+      <div className="defer-render"><FinalEnterpriseCTA /></div>
     </div>
   );
 }
