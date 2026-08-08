@@ -44,8 +44,11 @@ export default function CinematicHero() {
             <img
               src="/tayseer-banking-hero.svg"
               alt="Tayseer enterprise banking technology ecosystem connecting digital banking, core banking, payments, AI, integration and managed services"
+              width="720"
+              height="480"
               className="h-auto w-full object-contain"
               loading="eager"
+              decoding="async"
               fetchPriority="high"
             />
           </div>
