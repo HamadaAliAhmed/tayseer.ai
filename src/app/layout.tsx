@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import "@/index.css";
 import "@/App.css";
+import "@/performance.css";
 import { Header } from "@/site/Header";
 import { Footer } from "@/site/Footer";
-import ClientRuntime from "@/site/ClientRuntime";
 import StructuredData from "@/site/StructuredData";
 import { T } from "@/site/theme";
 
@@ -98,6 +98,9 @@ const websiteSchema = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preload" href="/fonts/Archivo-Variable.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+      </head>
       <body suppressHydrationWarning>
         <StructuredData data={[organizationSchema, websiteSchema]} />
         <a className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-[#5CF0CE] focus:px-4 focus:py-3 focus:text-[#090B0E]" href="#main-content">
@@ -108,7 +111,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <main id="main-content" tabIndex={-1} data-testid="page-main">{children}</main>
           <Footer />
         </div>
-        <ClientRuntime />
       </body>
     </html>
   );

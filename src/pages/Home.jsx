@@ -21,10 +21,10 @@ export default function Home() {
         <FahimExperience />
         <InteractiveEcosystem />
       </SpotlightStage>
-      <ArchitectureStage />
-      <GlobalPresence />
-      <ClientSuccessStories />
-      <LatestInsights />
+      <div className="defer-render"><ArchitectureStage /></div>
+      <div className="defer-render"><GlobalPresence /></div>
+      <div className="defer-render"><ClientSuccessStories /></div>
+      <div className="defer-render"><LatestInsights /></div>
       <FinalEnterpriseCTA />
     </div>
   );

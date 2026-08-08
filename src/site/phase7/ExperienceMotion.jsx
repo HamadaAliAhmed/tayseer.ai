@@ -1,57 +1,84 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
-export function SpotlightStage({ children, className = "" }) {
-  const ref = useRef(null);
-  const [point, setPoint] = useState({ x: 50, y: 40 });
-  const [reduced, setReduced] = useState(false);
+function useReducedMotionRef() {
+  const reduced = useRef(false);
 
   useEffect(() => {
     const media = window.matchMedia?.("(prefers-reduced-motion: reduce)");
     if (!media) return;
-    const sync = () => setReduced(media.matches);
+    const sync = () => { reduced.current = media.matches; };
     sync();
     media.addEventListener?.("change", sync);
     return () => media.removeEventListener?.("change", sync);
   }, []);
 
+  return reduced;
+}
+
+export function SpotlightStage({ children, className = "" }) {
+  const ref = useRef(null);
+  const reduced = useReducedMotionRef();
+  const frame = useRef(null);
+
   const onMove = (event) => {
-    if (reduced || !ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const x = ((event.clientX - rect.left) / rect.width) * 100;
-    const y = ((event.clientY - rect.top) / rect.height) * 100;
-    setPoint({ x, y });
+    const element = ref.current;
+    if (reduced.current || !element) return;
+    const clientX = event.clientX;
+    const clientY = event.clientY;
+    if (frame.current) cancelAnimationFrame(frame.current);
+    frame.current = requestAnimationFrame(() => {
+      const rect = element.getBoundingClientRect();
+      const x = ((clientX - rect.left) / rect.width) * 100;
+      const y = ((clientY - rect.top) / rect.height) * 100;
+      element.style.backgroundImage = `radial-gradient(circle at ${x}% ${y}%, rgba(13,90,140,.055), transparent 26%)`;
+    });
   };
 
-  return <div ref={ref} onMouseMove={onMove} className={`relative ${className}`} style={{ backgroundImage: reduced ? undefined : `radial-gradient(circle at ${point.x}% ${point.y}%, rgba(13,90,140,.055), transparent 26%)` }}>{children}</div>;
+  useEffect(() => () => {
+    if (frame.current) cancelAnimationFrame(frame.current);
+  }, []);
+
+  return <div ref={ref} onPointerMove={onMove} className={`relative ${className}`}>{children}</div>;
 }
 
 export function DepthCard({ children, className = "" }) {
   const ref = useRef(null);
-  const [transform, setTransform] = useState("perspective(900px) rotateX(0deg) rotateY(0deg)");
-  const [reduced, setReduced] = useState(false);
+  const reduced = useReducedMotionRef();
+  const frame = useRef(null);
 
   useEffect(() => {
-    const media = window.matchMedia?.("(prefers-reduced-motion: reduce)");
-    if (!media) return;
-    const sync = () => setReduced(media.matches);
-    sync();
-    media.addEventListener?.("change", sync);
-    return () => media.removeEventListener?.("change", sync);
+    const element = ref.current;
+    if (!element) return;
+    element.style.transition = "transform .22s cubic-bezier(.2,.8,.2,1)";
+    element.style.transformStyle = "preserve-3d";
   }, []);
 
   const onMove = (event) => {
-    if (reduced || !ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const px = (event.clientX - rect.left) / rect.width - .5;
-    const py = (event.clientY - rect.top) / rect.height - .5;
-    setTransform(`perspective(900px) rotateX(${(-py * 3).toFixed(2)}deg) rotateY(${(px * 4).toFixed(2)}deg) translateZ(0)`);
+    const element = ref.current;
+    if (reduced.current || !element) return;
+    const clientX = event.clientX;
+    const clientY = event.clientY;
+    if (frame.current) cancelAnimationFrame(frame.current);
+    frame.current = requestAnimationFrame(() => {
+      const rect = element.getBoundingClientRect();
+      const px = (clientX - rect.left) / rect.width - .5;
+      const py = (clientY - rect.top) / rect.height - .5;
+      element.style.transform = `perspective(900px) rotateX(${(-py * 3).toFixed(2)}deg) rotateY(${(px * 4).toFixed(2)}deg) translateZ(0)`;
+    });
   };
 
-  const reset = () => setTransform("perspective(900px) rotateX(0deg) rotateY(0deg)");
+  const reset = () => {
+    if (frame.current) cancelAnimationFrame(frame.current);
+    if (ref.current) ref.current.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
+  };
 
-  return <div ref={ref} onMouseMove={onMove} onMouseLeave={reset} className={className} style={{ transform: reduced ? undefined : transform, transition: reduced ? "none" : "transform .22s cubic-bezier(.2,.8,.2,1)", transformStyle: "preserve-3d" }}>{children}</div>;
+  useEffect(() => () => {
+    if (frame.current) cancelAnimationFrame(frame.current);
+  }, []);
+
+  return <div ref={ref} onPointerMove={onMove} onPointerLeave={reset} className={className}>{children}</div>;
 }
 
 export function MotionSignal({ className = "" }) {
