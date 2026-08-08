@@ -32,6 +32,19 @@ export function SolutionHero({ eyebrow, title, tagline, lead, visual, primaryHre
   );
 }
 
+export function SolutionPageNav() {
+  const links = [["Outcomes", "#outcomes"], ["Capabilities", "#capabilities"], ["Architecture", "#architecture"], ["Related", "#related-solutions"]];
+  return (
+    <nav aria-label="Solution page sections" className="sticky top-0 z-20 border-b px-4 backdrop-blur-lg sm:px-6 md:px-12" style={{ borderColor: T.border, background: "rgba(247,246,242,.92)" }}>
+      <div className="mx-auto flex max-w-[1400px] items-center gap-1 overflow-x-auto py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {links.map(([label, href]) => <a key={href} href={href} className="inline-flex min-h-10 shrink-0 items-center px-3 text-xs font-semibold uppercase tracking-wider" style={{ color: T.muted }}>{label}</a>)}
+        <span className="ml-auto hidden sm:block" />
+        <Link href="/connect" className="ml-2 inline-flex min-h-10 shrink-0 items-center gap-2 px-4 text-xs font-semibold uppercase tracking-wider" style={{ background: T.signal, color: T.bg }}>Discuss solution <ArrowRight size={14} aria-hidden="true" /></Link>
+      </div>
+    </nav>
+  );
+}
+
 export function ChallengeOutcome({ challenges = [], outcomes = [] }) {
   return (
     <section id="outcomes" className="scroll-mt-24 border-b px-6 py-20 sm:py-24 md:px-12" style={{ borderColor: T.border }} aria-labelledby="challenge-title">
@@ -105,6 +118,17 @@ export function ArchitectureFlow({ title, steps = [] }) {
   );
 }
 
+export function ConsultationBridge({ title = "Bring the architecture into your environment." }) {
+  return (
+    <section className="px-6 py-12 md:px-12">
+      <div className="mx-auto flex max-w-[1400px] flex-col gap-6 border p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between" style={{ borderColor: T.signal, background: "rgba(13,90,140,.07)" }}>
+        <div><div className="font-jbmono text-[10px] uppercase tracking-[0.22em]" style={{ color: T.signal }}>Next step</div><h2 className="mt-2 max-w-2xl text-2xl font-bold uppercase tracking-tight sm:text-3xl">{title}</h2></div>
+        <Link href="/connect" className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 px-6 py-3 text-sm font-semibold uppercase tracking-wider" style={{ background: T.signal, color: T.bg }}>Schedule consultation <ArrowRight size={16} aria-hidden="true" /></Link>
+      </div>
+    </section>
+  );
+}
+
 export function RelatedSolutions({ items = [] }) {
   return (
     <section id="related-solutions" className="scroll-mt-24 px-6 py-20 md:px-12" aria-labelledby="related-solutions-title">
@@ -125,9 +149,11 @@ export function EnterpriseSolutionPage({ hero, challenges, outcomes, capabilityT
   return (
     <div className="font-archivo" style={{ background: T.bg, color: T.text }}>
       <SolutionHero {...hero} />
+      <SolutionPageNav />
       <ChallengeOutcome challenges={challenges} outcomes={outcomes} />
       <CapabilityGrid title={capabilityTitle} intro={capabilityIntro} items={capabilities} />
       <ArchitectureFlow {...architecture} />
+      <ConsultationBridge />
       <RelatedSolutions items={related} />
       <ContactSection />
     </div>
