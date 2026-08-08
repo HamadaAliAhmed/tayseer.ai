@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 import { POSTS } from "@/pages/blogData";
-
-const siteUrl = "https://tayseer.me";
+import { SITE_URL } from "@/site/siteConfig";
 
 const staticRoutes = [
   { path: "", changeFrequency: "weekly" as const, priority: 1 },
@@ -22,13 +21,13 @@ const staticRoutes = [
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
-    url: `${siteUrl}${route.path}`,
+    url: `${SITE_URL}${route.path}`,
     changeFrequency: route.changeFrequency,
     priority: route.priority
   }));
 
   const articleEntries: MetadataRoute.Sitemap = POSTS.map((post) => ({
-    url: `${siteUrl}/blog/${post.slug}`,
+    url: `${SITE_URL}/blog/${post.slug}`,
     lastModified: new Date(post.date),
     changeFrequency: "yearly",
     priority: 0.65
