@@ -8,6 +8,8 @@ const PROOF = [
   ["100+", "Skilled experts"],
 ];
 
+const HERO_IMAGE = "https://images.unsplash.com/photo-1743696398209-6b693d480862?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=82&w=1600";
+
 export default function CinematicHero() {
   return (
     <section className="relative isolate overflow-hidden border-b px-6 pb-14 pt-24 md:min-h-[92vh] md:px-12 md:pb-20 md:pt-32" style={{ borderColor: T.border }} aria-labelledby="phase7-hero-title">
@@ -44,18 +46,24 @@ export default function CinematicHero() {
         </div>
 
         <div className="relative mx-auto w-full lg:col-span-6">
-          <div className="absolute inset-6 rounded-full blur-3xl" style={{ background: "rgba(13,90,140,.13)" }} />
-          <div className="relative mx-auto w-full max-w-[720px]">
+          <div className="absolute inset-6 rounded-full blur-3xl" style={{ background: "rgba(13,90,140,.18)" }} />
+          <div className="relative mx-auto w-full max-w-[720px] overflow-hidden rounded-[30px] border" style={{ borderColor: T.border, background: T.panel }}>
             <img
-              src="/tayseer-banking-hero.svg"
-              alt="Tayseer enterprise banking technology ecosystem connecting digital banking, core banking, payments, AI, integration and managed services"
+              src={HERO_IMAGE}
+              alt="Real contactless digital payment experience representing Tayseer digital banking and payment technology"
               width="720"
-              height="480"
-              className="h-auto w-full object-contain"
+              height="540"
+              className="aspect-[4/3] h-auto w-full object-cover"
               loading="eager"
               decoding="async"
               fetchPriority="high"
             />
+            <div className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(120deg, rgba(4,17,29,.64) 0%, rgba(4,17,29,.12) 46%, rgba(13,90,140,.18) 100%)" }} />
+            <div className="pointer-events-none absolute inset-0 opacity-60" style={{ backgroundImage: "linear-gradient(rgba(56,189,248,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(56,189,248,.12) 1px, transparent 1px)", backgroundSize: "58px 58px" }} />
+            <div className="absolute left-5 top-5 rounded-full border px-3 py-2 font-jbmono text-[10px] uppercase tracking-[.18em] backdrop-blur-md" style={{ borderColor: "rgba(255,255,255,.25)", background: "rgba(4,17,29,.42)", color: "white" }}>Real banking experience · Tayseer intelligence layer</div>
+            <div className="absolute bottom-5 left-5 right-5 grid grid-cols-2 gap-2 sm:grid-cols-4">
+              {["Digital banking", "Payments", "AI", "Integration"].map((label) => <div key={label} className="rounded-xl border px-3 py-2 text-[10px] font-medium backdrop-blur-md" style={{ borderColor: "rgba(255,255,255,.2)", background: "rgba(4,17,29,.5)", color: "white" }}>{label}</div>)}
+            </div>
           </div>
         </div>
       </div>
